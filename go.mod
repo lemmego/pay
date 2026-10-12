@@ -2,7 +2,7 @@ module github.com/lemmego/pay
 
 go 1.27
 
-require github.com/lemmego/api v0.1.46
+require github.com/lemmego/api v0.2.0
 
 require (
 	cel.dev/expr v0.18.0 // indirect
@@ -28,13 +28,10 @@ require (
 	github.com/envoyproxy/protoc-gen-validate v1.1.0 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/gertd/go-pluralize v0.2.1 // indirect
-	github.com/ggicci/httpin v0.19.0 // indirect
-	github.com/ggicci/owl v0.8.2 // indirect
 	github.com/glebarez/go-sqlite v1.22.0 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-sql-driver/mysql v1.9.3 // indirect
-	github.com/golang/gddo v0.0.0-20210115222349-20d68f94ee1f // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/google/s2a-go v0.1.8 // indirect
 	github.com/google/uuid v1.6.0 // indirect
