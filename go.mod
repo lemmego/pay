@@ -2,7 +2,7 @@ module github.com/lemmego/pay
 
 go 1.27
 
-require github.com/lemmego/api v0.6.0
+require github.com/lemmego/api v0.6.3
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
@@ -16,7 +16,7 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
-	github.com/lemmego/migration v0.1.24 // indirect
+	github.com/lemmego/migration v0.2.0 // indirect
 	github.com/lib/pq v1.10.9 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/ncruces/go-strftime v1.0.0 // indirect
