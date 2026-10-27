@@ -266,10 +266,9 @@ func Get(a app.App) (*Billing, bool) {
 
 // Price reads what something costs, from the gateway.
 //
-// Callers cache it. See handlers.proPrice in the application for the shape:
-// one read an hour, and no price shown at all when the gateway is
-// unreachable — because a stale figure on a pitch page is a figure that
-// disagrees with the checkout the person is about to see.
+// Cache the result. A workable shape is one read an hour, and no price shown
+// at all when the gateway is unreachable — a stale figure on a pricing page
+// is a figure that disagrees with the checkout the person is about to reach.
 func (b *Billing) Price(ctx Context, id string) (*Price, error) {
 	if b.gateway == nil {
 		return nil, ErrNoGateway
