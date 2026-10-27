@@ -1,8 +1,7 @@
 # lemmego/pay
 
 Subscription billing for Lemmego applications: one hosted checkout, one signed
-webhook, and a verified-revenue reader that is deliberately a separate
-authorisation.
+webhook, and a verified-revenue reader behind its own authorisation.
 
 ```go
 import (
@@ -21,10 +20,11 @@ import (
 r.Post("/webhooks/stripe", pay.WebhookHandler())
 ```
 
-## Three mistakes this package exists to prevent
+## Three mistakes to avoid
 
 The expensive mistakes in billing are not in the API calls — they are in what
-the application believes afterwards.
+your application believes afterwards, which is what most of this page is
+about.
 
 **1. Entitlement comes from the webhook, never from the redirect.** A browser
 returning to a success URL proves only that a browser was sent there: the
@@ -95,24 +95,24 @@ There is **no exchange rate in this module and there should not be**: a rate is
 a time-varying external fact, and a revenue figure that silently depends on
 one is not verifiable by the person reading it.
 
-## Subscription status, and the two questions you ask of it
+## Subscription status
 
 ```go
 s.Status.Entitling()   // active, trialing — may they use the feature?
 s.Status.Earning()     // active, past_due — does this count as revenue?
 ```
 
-They differ on `past_due` on purpose. Somebody whose card just failed is still
-a paying customer for the purposes of a revenue figure, and should still be
-nudged rather than cut off mid-sentence; but entitlement is the stricter
-question.
+They differ on `past_due`. Somebody whose card has just failed is still a
+paying customer for the purposes of a revenue figure, and is better nudged
+than cut off mid-sentence — but entitlement is the stricter question, so it
+says no.
 
 ```go
 s.MonthlyRevenue()   // normalised to a month, discounts and quantity applied
 s.EntitledUntil()    // the period end
 ```
 
-## A grace period, not a cliff
+## Grace period
 
 ```go
 const pay.GracePeriod = 48 * time.Hour
@@ -187,10 +187,10 @@ type RevenueReader interface { … }
 type Authorizer   interface { … }   // the OAuth pair
 ```
 
-`RevenueReader` is **not** part of `Gateway`, deliberately: charging a
-customer and reading a founder's books are different authorisations with
-different blast radii, and an application should be able to do the first
-without being able to do the second.
+`RevenueReader` is **not** part of `Gateway`. Charging a customer and reading
+somebody's books are different authorisations with different blast radii, so
+your application can be able to do the first without being able to do the
+second.
 
 ```go
 revenue := paystripe.NewRevenue(gateway, clientID, clientSecret)
@@ -251,7 +251,7 @@ test that passes against the fake is a test of the real signature scheme. It
 records `Checkouts()` and `Portals()` so you can assert on what would have
 been sent. `paytest.Reader` implements `RevenueReader` and `Authorizer`.
 
-## Deliberate omissions
+## Limitations
 
 No refunds, invoices, metered usage, tax, one-off charges, a cancel flow of
 our own, or any local copy of a price. Each is either the gateway's hosted
